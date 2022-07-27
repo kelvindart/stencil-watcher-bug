@@ -18,7 +18,7 @@ export class MyComponent {
   watchMyVarHandler(newVal: string, oldVal: string): void {
     console.log('---watchMyVarHandler START---');
     console.log(newVal, oldVal);
-    console.log('---watchMyVarHandler START---');
+    console.log('---watchMyVarHandler END---');
   }
 
   mutateImmutable(newVal: string): void {
