@@ -1,5 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
-import { format } from '../../utils/utils';
+import { Component, h, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'my-component',
@@ -8,25 +7,25 @@ import { format } from '../../utils/utils';
 })
 export class MyComponent {
   /**
-   * The first name
+   * Immutable property
    */
-  @Prop() first: string;
+  @Prop() myVar: string = 'foo';
 
   /**
-   * The middle name
+   * Watch for any changes on myVar
    */
-  @Prop() middle: string;
+  @Watch('myVar')
+  watchMyVarHandler(newVal: string, oldVal: string): void {
+    console.log('---watchMyVarHandler START---');
+    console.log(newVal, oldVal);
+    console.log('---watchMyVarHandler START---');
+  }
 
-  /**
-   * The last name
-   */
-  @Prop() last: string;
-
-  private getText(): string {
-    return format(this.first, this.middle, this.last);
+  mutateImmutable(newVal: string): void {
+    this.myVar = newVal;
   }
 
   render() {
-    return <div>Hello, World! I'm {this.getText()}</div>;
+    return [<div>{this.myVar}</div>, <button onClick={() => this.mutateImmutable(`${Date.now()}`)}>Mutate</button>];
   }
 }
